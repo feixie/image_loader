@@ -11,7 +11,8 @@ from flask_cors import CORS
 
 APP_DIR = os.path.dirname(__file__)
 DATA_DIR = os.path.join(APP_DIR, 'data')
-MAX_EPOCH = datetime.now().timestamp()
+# MAX_EPOCH = datetime.max.timestamp() produced a ValueError: year 0 is out of range
+MAX_EPOCH = datetime(9999, 12, 31, 23, 59, 59, 000000).timestamp()
 MIN_EPOCH = 0
 utc=pytz.UTC
 
