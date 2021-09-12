@@ -1,6 +1,7 @@
 import boto3
 import botocore.exceptions
 import logging
+import os
 import pandas as pd
 import pytz
 from datetime import datetime
@@ -8,7 +9,8 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse, abort
 from flask_cors import CORS
 
-DEST = '/Users/feixie/Code/image_loader/data/'
+APP_DIR = os.path.dirname(__file__)
+DATA_DIR = os.path.join(APP_DIR, 'data')
 MAX_EPOCH = datetime.now().timestamp()
 MIN_EPOCH = 0
 utc=pytz.UTC
@@ -29,8 +31,8 @@ df = None
 def load_metadata(filename='metadata.txt'):
     logging.info("Loading metadata to dataframe.")
     global df
-    metadata_path = DEST + filename
-    ceres_bucket.download_file(filename, DEST + filename)
+    metadata_path = DATA_DIR + '/' + filename
+    ceres_bucket.download_file(filename, DATA_DIR + '/' + filename)
     df = pd.read_csv(metadata_path, delimiter="\t")
 
 def parse_time_range(from_time_epoch, to_time_epoch):
@@ -90,7 +92,7 @@ class Image(Resource):
         """
         logging.info("Processing request or image download of filename: {}".format(img_name))
         try:
-            ceres_bucket.download_file(img_name, DEST + img_name)
+            ceres_bucket.download_file(img_name, DATA_DIR + '/' + img_name)
         except botocore.exceptions.ClientError:
             abort(404, message="Image {} doesn't exist".format(img_name))
         return '', 204
