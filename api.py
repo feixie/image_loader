@@ -1,8 +1,6 @@
 import boto3
 import botocore.exceptions
 import logging
-import os
-import pickle
 import pandas as pd
 import pytz
 from datetime import datetime
