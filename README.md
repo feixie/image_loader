@@ -12,7 +12,7 @@ python3 api.py
 ```
 
 ### Run frontend application
-Follow instructions in the README found in imageloaderapp
+In a different tab, follow instructions in the README found in imageloaderapp
 
 ## Application Screenshots
 
