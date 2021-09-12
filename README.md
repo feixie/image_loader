@@ -1,5 +1,5 @@
 # image_loader
-An web app in python and Vue.js that downloads image files from s3 and displays image metadata
+An web application in Python and Vue.js that downloads image files from S3 and displays image metadata.
 
 ## Project setup
 ```
