@@ -11,8 +11,8 @@ from flask_cors import CORS
 
 APP_DIR = os.path.dirname(__file__)
 DATA_DIR = os.path.join(APP_DIR, 'data')
-# MAX_EPOCH = datetime.max.timestamp() produced a ValueError: year 0 is out of range
-MAX_EPOCH = datetime(9999, 12, 31, 23, 59, 59, 000000).timestamp()
+# MAX_EPOCH = int(datetime.max.timestamp()) produced a ValueError: year 0 is out of range
+MAX_EPOCH = int(datetime(9999, 12, 31, 23, 59, 59, 000000).timestamp())
 MIN_EPOCH = 0
 utc=pytz.UTC
 
@@ -20,10 +20,9 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-# for request data validation
 parser = reqparse.RequestParser()
-parser.add_argument("from_time_epoch", default=MIN_EPOCH)
-parser.add_argument("to_time_epoch", default=MAX_EPOCH)
+parser.add_argument("from_time_epoch", type=int, default=MIN_EPOCH)
+parser.add_argument("to_time_epoch", type=int, default=MAX_EPOCH)
 
 s3 = boto3.resource('s3')
 ceres_bucket = s3.Bucket('ceres-technical-challenge')
@@ -39,15 +38,9 @@ def load_metadata(filename='metadata.txt'):
 def parse_time_range(from_time_epoch, to_time_epoch):
     # if time range is invalid, return results for all times
     logging.info("Parsing time range from arguments: {}, {}".format(from_time_epoch, to_time_epoch))
-    try:
-        from_time_epoch = float(from_time_epoch)
-        to_time_epoch = float(to_time_epoch)
-    except ValueError:
-        logging.error(
-            "Invalid time range: from_time_epoch:{}, to_time_epch:{}".format(from_time_epoch, to_time_epoch))
-        return MIN_EPOCH, MAX_EPOCH
-
-    # validate
+    from_time_epoch = int(from_time_epoch)
+    to_time_epoch = int(to_time_epoch)
+    # validate time range
     if from_time_epoch < MIN_EPOCH:
         from_time_epoch = MIN_EPOCH
     if to_time_epoch > MAX_EPOCH:
