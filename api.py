@@ -58,16 +58,16 @@ class ImageMeta(Resource):
 	def get(self, img_name):
 		"""Returns metadata for a given image file
 
-    Parameters
-    ----------
-    img_name: string
-    	Filename of image
+		Parameters
+		----------
+		img_name: string
+			Filename of image
 
-    Returns
-    -------
-    metadata : json
-       Metadata of image
-    """
+		Returns
+		-------
+		metadata : json
+			Metadata of image
+		"""
 		logging.info("Processing request for image metadata for {}".format(img_name))
 		if df is None:
 			load_metadata()
@@ -86,11 +86,11 @@ class Image(Resource):
 	def get(self, img_name):
 		"""Download image from S3
 
-    Parameters
-    ----------
-    image_name: string
-    	Filename of image to download
-    """
+		Parameters
+		----------
+		image_name: string
+			Filename of image to download
+		"""
 		logging.info("Processing request or image download of filename: {}".format(img_name))
 		try:
 			ceres_bucket.download_file(img_name, DEST + img_name)
@@ -103,16 +103,16 @@ class ImageList(Resource):
 	def get(self):
 		"""Fetch a list of image file names from S3.
 
-    Parameters
-    ----------
-    from_time_epoch, to_time_epoch : float
-    	Images returned should fall within this time range. Passed in as request arguments.
+		Parameters
+		----------
+		from_time_epoch, to_time_epoch : float
+			Images returned should fall within this time range. Passed in as request arguments.
 
-    Returns
-    -------
-    img_list : json
-       List of images
-    """
+		Returns
+		-------
+		img_list : json
+			List of images
+		"""
 		args = parser.parse_args()
 		from_time_epoch = args['from_time_epoch']
 		to_time_epoch = args['to_time_epoch']
