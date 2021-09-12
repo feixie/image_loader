@@ -1,17 +1,19 @@
 # image_loader
 An web application in Python and Vue.js that downloads image files from S3 and displays image metadata.
 
-## Project setup
+## Run API
+### Project setup
 ```
 pip install flask-restful
 pip install flask-cors
 ```
-### Run api
+
+### Run 
 ```
 python3 api.py
 ```
 
-### Run frontend application
+## Run frontend application
 In a different tab, follow instructions in the README found in imageloaderapp
 
 ## Application Screenshots
